@@ -1,113 +1,105 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
-  </div>
+  <el-container style="height: 500px; border: 1px solid #eee">
+    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+      <el-menu :default-openeds="['1', '3']">
+        <el-submenu index="1">
+          <template slot="title"><i class="el-icon-message"></i>Navigator One</template>
+          <el-menu-item-group>
+            <template slot="title">Group 1</template>
+            <el-menu-item index="1-1">Option 1</el-menu-item>
+            <el-menu-item index="1-2">Option 2</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="Group 2">
+            <el-menu-item index="1-3">Option 3</el-menu-item>
+          </el-menu-item-group>
+          <el-submenu index="1-4">
+            <template slot="title">Option4</template>
+            <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title"><i class="el-icon-menu"></i>Navigator Two</template>
+          <el-menu-item-group>
+            <template slot="title">Group 1</template>
+            <el-menu-item index="2-1">Option 1</el-menu-item>
+            <el-menu-item index="2-2">Option 2</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="Group 2">
+            <el-menu-item index="2-3">Option 3</el-menu-item>
+          </el-menu-item-group>
+          <el-submenu index="2-4">
+            <template slot="title">Option 4</template>
+            <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+        <el-submenu index="3">
+          <template slot="title"><i class="el-icon-setting"></i>Navigator Three</template>
+          <el-menu-item-group>
+            <template slot="title">Group 1</template>
+            <el-menu-item index="3-1">Option 1</el-menu-item>
+            <el-menu-item index="3-2">Option 2</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="Group 2">
+            <el-menu-item index="3-3">Option 3</el-menu-item>
+          </el-menu-item-group>
+          <el-submenu index="3-4">
+            <template slot="title">Option 4</template>
+            <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+      </el-menu>
+    </el-aside>
+
+    <el-container>
+      <el-header style="text-align: right; font-size: 12px">
+        <el-dropdown>
+          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>View</el-dropdown-item>
+            <el-dropdown-item>Add</el-dropdown-item>
+            <el-dropdown-item>Delete</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <span>Tom</span>
+      </el-header>
+
+      <el-main>
+        <el-table :data="tableData">
+          <el-table-column prop="date" label="Date" width="140">
+          </el-table-column>
+          <el-table-column prop="name" label="Name" width="120">
+          </el-table-column>
+          <el-table-column prop="address" label="Address">
+          </el-table-column>
+        </el-table>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
   data () {
+    const item = {
+      date: '2016-05-02',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles'
+    }
     return {
-      msg: 'Welcome to Your Vue.js App'
+      tableData: Array(20).fill(item)
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style>
+  .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+
+  .el-aside {
+    color: #333;
+  }
 </style>
