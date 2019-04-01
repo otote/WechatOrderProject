@@ -3,24 +3,36 @@
     <el-header height="40px" class="header_class">
       <div>控制台</div>
       <div class="header_button">
-        <el-button  size="mini" class="index" type="primary">首页</el-button>
+        <el-button  @click.prevent="orderManagerFlag=!orderManagerFlag" size="mini" class="orderManager" type="primary">订单查询</el-button>
         <el-button  size="mini" class="logout" type="danger">退出</el-button>
       </div>
     </el-header>
     <el-main id="main_class" class="main_class">
-      <div class="main_div">
-        <el-card shadow="hover" style="background-color: #409EFF;" class="main_card">
-          <el-button v-on:click="greet" class="main_card_button">菜品管理</el-button>
-        </el-card>
-        <el-card shadow="hover" style="background-color: #67C23A" class="main_card">查看订单</el-card>
-        <el-card shadow="hover" style="background-color: #F56C6C" class="main_card">收益信息</el-card>
-      </div>
+      <OrderManager v-if='orderManagerFlag'></OrderManager>
+      <!--<div class="welcome">-->
+        <!--欢迎使用商家后台管理系统-->
+      <!--</div>-->
+      <!--<div class="main_div">-->
+        <!--<el-card shadow="hover" style="background-color: #409EFF;" class="main_card">-->
+          <!--<el-button v-on:click="greet" class="main_card_button">菜品管理</el-button>-->
+        <!--</el-card>-->
+        <!--<el-card shadow="hover" style="background-color: #67C23A" class="main_card">查看订单</el-card>-->
+        <!--<el-card shadow="hover" style="background-color: #F56C6C" class="main_card">收益信息</el-card>-->
+      <!--</div>-->
     </el-main>
   </el-container>
 </template>
 
 <script>
+import OrderManager from '@/components/index/OrderManager'
+
 export default {
+  components: {OrderManager},
+  data () {
+    return {
+      orderManagerFlag: false
+    }
+  },
   name: 'Index',
   mounted () {
     var clientHight = window.innerHeight
@@ -60,6 +72,10 @@ export default {
     width: 100%;
   }
 
+  .welcome{
+    font-weight: bold;
+    font-size: 20px;
+  }
   .main_div{
     display: flex;
     align-items: center;
@@ -74,7 +90,8 @@ export default {
     text-align: center;
     align-items: center;
     justify-content: center;
-    border-radius: 30px;
+    border-radius: 40px;
+    border: 0px;
     margin: 20px;
     font-weight: bold;
     font-size: 20px;
@@ -87,7 +104,7 @@ export default {
     background-color:rgba(255,255,255,0);
     border: 0px;
   }
-  .index{
+  .orderManager{
     float: right;
   }
 
