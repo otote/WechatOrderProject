@@ -3,12 +3,14 @@
     <el-header height="40px" class="header_class">
       <div>控制台</div>
       <div class="header_button">
-        <el-button  @click.prevent="orderManagerFlag=!orderManagerFlag" size="mini" class="orderManager" type="primary">订单查询</el-button>
-        <el-button  size="mini" class="logout" type="danger">退出</el-button>
+        <el-button @click='changeView("OrderManager")' size="mini" class="header_btn" type="primary">订单查询</el-button>
+        <el-button @click='changeView("GoodManager")' size="mini" class="header_btn" type="primary">菜品管理</el-button>
+        <el-button @click='changeView("MoneyManager")' size="mini" class="header_btn" type="primary">收益查询</el-button>
+        <el-button  size="mini" class="header_btn" type="danger">退出</el-button>
       </div>
     </el-header>
     <el-main id="main_class" class="main_class">
-      <OrderManager v-if='orderManagerFlag'></OrderManager>
+      <component :is="currPage"></component>
       <!--<div class="welcome">-->
         <!--欢迎使用商家后台管理系统-->
       <!--</div>-->
@@ -25,12 +27,14 @@
 
 <script>
 import OrderManager from '@/components/index/OrderManager'
+import MoneyManager from '@/components/index/MoneyManager'
+import GoodManager from '@/components/index/GoodManager'
 
 export default {
-  components: {OrderManager},
+  components: {OrderManager, MoneyManager, GoodManager},
   data () {
     return {
-      orderManagerFlag: false
+      currPage: 'OrderManager'
     }
   },
   name: 'Index',
@@ -46,6 +50,9 @@ export default {
       if (event) {
         alert(event.target.tagName)
       }
+    },
+    changeView: function (pageName) {
+      this.currPage = pageName
     }
   }
 }
@@ -53,7 +60,7 @@ export default {
 
 <style scoped>
   .header_class{
-    background-color: #DCDFE6;
+    background-color: #20a0ff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -104,12 +111,11 @@ export default {
     background-color:rgba(255,255,255,0);
     border: 0px;
   }
-  .orderManager{
+  .header_btn{
     float: right;
   }
-
-  .logout{
-    float: right;
-  }
+  /*.logout{*/
+    /*float: right;*/
+  /*}*/
 
 </style>
