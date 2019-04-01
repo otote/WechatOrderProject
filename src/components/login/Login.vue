@@ -48,8 +48,7 @@ export default {
         this.$message.error('请输入密码')
         return
       }
-      alert(this.userName)
-      alert(this.password)
+      this.$router.push({path: '/index/index'})
     }
   }
 }
