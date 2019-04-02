@@ -31,6 +31,11 @@ export default {
       this.userName = JSON.parse(localStorage.getItem('user')).userName
       this.password = JSON.parse(localStorage.getItem('user')).password
     }
+
+    // 自动登录
+    if (this.userName === 'admin' && this.password === 'admin') {
+      this.$router.push({path: '/index/index'})
+    }
   },
   computed: {
     btnText () {
@@ -48,6 +53,14 @@ export default {
         this.$message.error('请输入密码')
         return
       }
+
+      if (this.userName !== 'admin' && this.password !== 'admin') {
+        this.$message.error('用户名或密码错误')
+        return
+      }
+
+      let user = {'userName': this.userName, 'password': this.password}
+      localStorage.setItem('user', JSON.stringify(user))
       this.$router.push({path: '/index/index'})
     }
   }
@@ -59,8 +72,8 @@ export default {
     height: 100%;
     background: url("../../assets/background.png");
     background-size: 100%;
-    left: 0px;
-    top: 0px;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .login_form {
