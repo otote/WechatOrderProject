@@ -1,5 +1,6 @@
 <template class="login_template">
   <div id="login-page" class="login_page">
+    <div class="welcome">欢迎使用商家后台管理系统</div>
     <el-form class="login_form">
       <el-form-item>
          <el-input type="text" class="username" placeholder="用户名" v-model="userName"></el-input>
@@ -83,10 +84,15 @@ export default {
     background-position: center;
   }
 
+  .welcome{
+    font-weight: bolder;
+    font-size: 20px;
+    padding-top: 10%;
+  }
   .login_form {
     display: flex;
     justify-content: center;
-    padding-top: 20%;
+    padding-top: 10%;
     padding-left: 10%;
     padding-right: 10%;
   }
