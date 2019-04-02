@@ -35,8 +35,8 @@ export default {
     }
 
     // 自动登录
-    if (this.userName === 'admin' && this.password === 'admin') {
-      this.$router.push({path: '/index/index'})
+    if (this.userName !== '' && this.password !== '') {
+      this.login()
     }
   },
   computed: {
