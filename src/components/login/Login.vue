@@ -14,6 +14,8 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
+
 export default {
   data () {
     return {
@@ -54,14 +56,19 @@ export default {
         return
       }
 
-      if (this.userName !== 'admin' && this.password !== 'admin') {
-        this.$message.error('用户名或密码错误')
-        return
-      }
-
-      let user = {'userName': this.userName, 'password': this.password}
-      localStorage.setItem('user', JSON.stringify(user))
-      this.$router.push({path: '/index/index'})
+      let data = {'username': this.userName, 'password': this.password}
+      Vue.axios.post('/merchant/login', data).then(response => {
+        if (response.data.statusCode === '200') {
+          let user = {'userName': this.userName, 'password': this.password}
+          localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('AuthToken', response.data.data.authToken)
+          this.$router.push({path: '/index/index'})
+        } else {
+          this.$message.error(response.data.errorMessage)
+        }
+      }).catch(reason => {
+        console.log(reason)
+      })
     }
   }
 }

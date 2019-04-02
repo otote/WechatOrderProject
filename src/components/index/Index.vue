@@ -38,7 +38,6 @@ export default {
       this.currentComponent = componentName
     },
     logout: function () {
-      localStorage.removeItem('user')
       localStorage.clear()
       console.log(localStorage.getItem('user'))
       this.$router.push({path: '/'})
