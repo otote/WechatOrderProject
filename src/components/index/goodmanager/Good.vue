@@ -8,7 +8,8 @@
       <el-table-column prop="status" label="状态"></el-table-column>
       <el-table-column label="操作" width="160px">
         <template slot-scope="scope">
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="showEditorGoodInfoDialog()" type="text" size="small">编辑</el-button>
+          <el-button @click="sendMsg" type="text" size="small">测试</el-button>
           <el-button @click="showDeleteGoodDialog(scope.row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -20,16 +21,26 @@
         <el-button type="primary" @click="deleteGoodById(deleteGoodId)">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog title="编辑" :visible.sync="editorGoodInfoDialogVisible" width="60%">
+      <EditorGoodInfo></EditorGoodInfo>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import EditorGoodInfo from '@/components/index/goodmanager/EditorGoodInfo'
+import Bus from '@/components/utils/Bus'
+
 export default {
   name: 'Good',
+  components: {EditorGoodInfo},
   data () {
     return {
       good: [],
       deleteGoodDialogVisible: false,
+      editorGoodInfoDialogVisible: false,
       deleteGoodId: -1
     }
   },
@@ -39,80 +50,38 @@ export default {
       this.deleteGoodDialogVisible = true
     },
     deleteGoodById: function (id) {
-      console.log('删除' + id)
-      this.deleteGoodDialogVisible = false
-      this.$message.success('删除成功！')
-      this.good = JSON.parse('[\n' +
-        '  {\n' +
-        '    "id": 1,\n' +
-        '    "name": "ggd",\n' +
-        '    "price": 123,\n' +
-        '    "sortId": 2,\n' +
-        '    "img": "fdsgfgfdg",\n' +
-        '    "status": "上架"\n' +
-        '  },\n' +
-        '  {\n' +
-        '    "id": 6,\n' +
-        '    "name": "kukuy",\n' +
-        '    "price": 78,\n' +
-        '    "sortId": 2,\n' +
-        '    "img": "fdsgfgfdg",\n' +
-        '    "status": "上架"\n' +
-        '  }\n' +
-        ']\n')
+      // 删除菜品
+      Vue.axios.delete(`/good/${id}`).then((res) => {
+        if (res.data.statusCode === '200') {
+          this.deleteGoodDialogVisible = false
+          this.$message.success('删除成功！')
+          // 从新获取商品
+          Vue.axios.get('/good').then((res) => {
+            if (res.data.statusCode === '200') {
+              this.good = res.data.data
+            }
+          })
+        } else {
+          this.deleteGoodDialogVisible = false
+          this.$message.success('删除失败！')
+        }
+      })
+    },
+    showEditorGoodInfoDialog: function () {
+      Bus.$emit('send', '测试成功')
+      this.editorGoodInfoDialogVisible = true
+    },
+    sendMsg: function () {
+      console.log('发送中。。。。')
+      // Bus.$emit('send', '测试成功')
     }
   },
   created () {
-    this.good = JSON.parse('[\n' +
-      '  {\n' +
-      '    "id": 1,\n' +
-      '    "name": "ggd",\n' +
-      '    "price": 123,\n' +
-      '    "sortId": 2,\n' +
-      '    "img": "fdsgfgfdg",\n' +
-      '    "status": "上架"\n' +
-      '  },\n' +
-      '  {\n' +
-      '    "id": 2,\n' +
-      '    "name": "dfgsf",\n' +
-      '    "price": 45,\n' +
-      '    "sortId": 2,\n' +
-      '    "img": "fdsgfgfdg",\n' +
-      '    "status": "下架"\n' +
-      '  },\n' +
-      '  {\n' +
-      '    "id": 3,\n' +
-      '    "name": "juuyk",\n' +
-      '    "price": 67,\n' +
-      '    "sortId": 2,\n' +
-      '    "img": "fdsgfgfdg",\n' +
-      '    "status": "上架"\n' +
-      '  },\n' +
-      '  {\n' +
-      '    "id": 4,\n' +
-      '    "name": "kuyu",\n' +
-      '    "price": 67,\n' +
-      '    "sortId": 2,\n' +
-      '    "img": "fdsgfgfdg",\n' +
-      '    "status": "上架"\n' +
-      '  },\n' +
-      '  {\n' +
-      '    "id": 5,\n' +
-      '    "name": "kuyuy",\n' +
-      '    "price": 77,\n' +
-      '    "sortId": 2,\n' +
-      '    "img": "fdsgfgfdg",\n' +
-      '    "status": "上架"\n' +
-      '  },\n' +
-      '  {\n' +
-      '    "id": 6,\n' +
-      '    "name": "kukuy",\n' +
-      '    "price": 78,\n' +
-      '    "sortId": 2,\n' +
-      '    "img": "fdsgfgfdg",\n' +
-      '    "status": "上架"\n' +
-      '  }\n' +
-      ']\n')
+    Vue.axios.get('/good').then((res) => {
+      if (res.data.statusCode === '200') {
+        this.good = res.data.data
+      }
+    })
   }
 }
 </script>

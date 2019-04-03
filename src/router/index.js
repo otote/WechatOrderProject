@@ -8,6 +8,7 @@ import GoodManager from '@/components/index/goodmanager/GoodManager'
 import Good from '@/components/index/goodmanager/Good'
 import CreateGood from '@/components/index/goodmanager/CreateGood'
 import SortManager from '@/components/index/goodmanager/SortManager'
+import EditorGoodInfo from '@/components/index/goodmanager/EditorGoodInfo'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/index/GoodManager/SortManager',
       name: 'SortManager',
       component: SortManager
+    },
+    {
+      path: '/index/GoodManager/EditorGoodInfo',
+      name: 'EditorGoodInfo',
+      component: EditorGoodInfo
     }
   ]
 })
