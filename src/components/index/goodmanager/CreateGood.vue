@@ -15,8 +15,7 @@
       </el-form-item>
       <el-form-item label="分类">
         <el-select v-model="goodForm.sortId" placeholder="请选择商品分类">
-          <el-option label="分类1" value="1"></el-option>
-          <el-option label="分类2" value="2"></el-option>
+          <el-option :key="sort.id" v-for="sort in sorts" v-bind:label="sort.name" v-bind:value="sort.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="上架">
@@ -49,7 +48,8 @@ export default {
         status: '',
         goodDesc: ''
       },
-      uploadLoading: false
+      uploadLoading: false,
+      sorts: []
     }
   },
   methods: {
@@ -98,6 +98,12 @@ export default {
       }
       return isJPG && isLt2M
     }
+  },
+  created () {
+    // 获取分类
+    Vue.axios.get('/sort').then((res) => {
+      this.sorts = res.data.data
+    })
   }
 }
 </script>
