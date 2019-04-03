@@ -7,6 +7,7 @@ import MoneyManager from '@/components/index/MoneyManager'
 import GoodManager from '@/components/index/goodmanager/GoodManager'
 import Good from '@/components/index/goodmanager/Good'
 import CreateGood from '@/components/index/goodmanager/CreateGood'
+import SortManager from '@/components/index/goodmanager/SortManager'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/index/GoodManager/CreateGood',
       name: 'CreateGood',
       component: CreateGood
+    },
+    {
+      path: '/index/GoodManager/SortManager',
+      name: 'SortManager',
+      component: SortManager
     }
   ]
 })

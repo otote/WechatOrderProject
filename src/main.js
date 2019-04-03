@@ -39,7 +39,7 @@ axios.interceptors.response.use(response => {
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 Vue.prototype.HOST = '/api'
-
+Vue.prototype.UPLOAD_JPG_URL = 'https://wechat.otote.cn/upload/jpg'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

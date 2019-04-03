@@ -16,10 +16,11 @@
 <script>
 import Good from '@/components/index/goodmanager/Good'
 import CreateGood from '@/components/index/goodmanager/CreateGood'
+import SortManager from '@/components/index/goodmanager/SortManager'
 
 export default {
   name: 'GoodManager',
-  components: {Good, CreateGood},
+  components: {Good, CreateGood, SortManager},
   data () {
     return {
       currentComponent: 'Good'
