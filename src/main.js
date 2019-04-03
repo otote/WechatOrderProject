@@ -11,6 +11,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 axios.defaults.baseURL = 'https://wechat.otote.cn'
+// axios.defaults.baseURL = 'http://localhost:9988'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 // 请求拦截 携带AuthToken

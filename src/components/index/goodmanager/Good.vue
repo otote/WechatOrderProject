@@ -1,15 +1,22 @@
 <template>
   <div>
-    <el-table :data="good" border style="width: 100%">
+    <el-table :data="goods" border style="width: 100%">
       <el-table-column prop="id" label="id"></el-table-column>
       <el-table-column prop="name" label="菜名"></el-table-column>
       <el-table-column prop="price" label="价格"></el-table-column>
-      <el-table-column prop="sortId" label="分类"></el-table-column>
-      <el-table-column prop="status" label="状态"></el-table-column>
+      <el-table-column prop="sortId" label="分类">
+        <template slot-scope="scope">
+          <span>{{sortsByKey[scope.row.sortId]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态">
+        <template slot-scope="scope">
+          <span>{{scope.row.status === 'AVAILABLE' ? '上架' : '下架'}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="160px">
         <template slot-scope="scope">
-          <el-button @click="showEditorGoodInfoDialog()" type="text" size="small">编辑</el-button>
-          <el-button @click="sendMsg" type="text" size="small">测试</el-button>
+          <el-button @click="showEditorGoodInfoDialog(scope.row)" type="text" size="small">编辑</el-button>
           <el-button @click="showDeleteGoodDialog(scope.row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -22,8 +29,8 @@
       </span>
     </el-dialog>
 
-    <el-dialog title="编辑" :visible.sync="editorGoodInfoDialogVisible" width="60%">
-      <EditorGoodInfo></EditorGoodInfo>
+    <el-dialog title="编辑" :visible.sync="editorGoodInfoDialogVisible" width="40%">
+      <EditorGoodInfo v-if="editorGoodInfoDialogVisible" v-bind:editorGoodInfo="editorGoodInfo"></EditorGoodInfo>
     </el-dialog>
   </div>
 </template>
@@ -31,17 +38,18 @@
 <script>
 import Vue from 'vue'
 import EditorGoodInfo from '@/components/index/goodmanager/EditorGoodInfo'
-import Bus from '@/components/utils/Bus'
 
 export default {
   name: 'Good',
   components: {EditorGoodInfo},
   data () {
     return {
-      good: [],
+      goods: [],
       deleteGoodDialogVisible: false,
       editorGoodInfoDialogVisible: false,
-      deleteGoodId: -1
+      deleteGoodId: -1,
+      editorGoodInfo: {},
+      sortsByKey: []
     }
   },
   methods: {
@@ -58,7 +66,7 @@ export default {
           // 从新获取商品
           Vue.axios.get('/good').then((res) => {
             if (res.data.statusCode === '200') {
-              this.good = res.data.data
+              this.goods = res.data.data
             }
           })
         } else {
@@ -67,20 +75,25 @@ export default {
         }
       })
     },
-    showEditorGoodInfoDialog: function () {
-      Bus.$emit('send', '测试成功')
+    showEditorGoodInfoDialog: function (good) {
+      this.editorGoodInfo = good
       this.editorGoodInfoDialogVisible = true
-    },
-    sendMsg: function () {
-      console.log('发送中。。。。')
-      // Bus.$emit('send', '测试成功')
     }
   },
   created () {
     Vue.axios.get('/good').then((res) => {
       if (res.data.statusCode === '200') {
-        this.good = res.data.data
+        this.goods = res.data.data
       }
+    })
+
+    Vue.axios.get('/sort').then((res) => {
+      let sorts = res.data.data
+      let sortsByKey = []
+      sorts.forEach((sort) => {
+        sortsByKey[sort.id] = sort.name
+      })
+      this.sortsByKey = sortsByKey
     })
   }
 }
