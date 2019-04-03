@@ -4,7 +4,9 @@ import Login from '@/components/login/Login'
 import Index from '@/components/index/Index'
 import OrderManager from '@/components/index/OrderManager'
 import MoneyManager from '@/components/index/MoneyManager'
-import GoodManager from '@/components/index/GoodManager'
+import GoodManager from '@/components/index/goodmanager/GoodManager'
+import Good from '@/components/index/goodmanager/Good'
+import CreateGood from '@/components/index/goodmanager/CreateGood'
 
 Vue.use(Router)
 
@@ -34,6 +36,16 @@ export default new Router({
       path: '/index/GoodManager',
       name: 'GoodManager',
       component: GoodManager
+    },
+    {
+      path: '/index/GoodManager/Good',
+      name: 'Good',
+      component: Good
+    },
+    {
+      path: '/index/GoodManager/CreateGood',
+      name: 'CreateGood',
+      component: CreateGood
     }
   ]
 })

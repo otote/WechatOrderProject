@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "ggd",
+    "price": 123,
+    "sortId": 2,
+    "img": "fdsgfgfdg",
+    "status": "上架"
+  },
+  {
+    "id": 2,
+    "name": "dfgsf",
+    "price": 45,
+    "sortId": 2,
+    "img": "fdsgfgfdg",
+    "status": "下架"
+  },
+  {
+    "id": 3,
+    "name": "juuyk",
+    "price": 67,
+    "sortId": 2,
+    "img": "fdsgfgfdg",
+    "status": "上架"
+  },
+  {
+    "id": 4,
+    "name": "kuyu",
+    "price": 67,
+    "sortId": 2,
+    "img": "fdsgfgfdg",
+    "status": "上架"
+  },
+  {
+    "id": 5,
+    "name": "kuyuy",
+    "price": 77,
+    "sortId": 2,
+    "img": "fdsgfgfdg",
+    "status": "上架"
+  },
+  {
+    "id": 6,
+    "name": "kukuy",
+    "price": 78,
+    "sortId": 2,
+    "img": "fdsgfgfdg",
+    "status": "上架"
+  }
+]

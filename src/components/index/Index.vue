@@ -19,7 +19,7 @@
 <script>
 import OrderManager from '@/components/index/OrderManager'
 import MoneyManager from '@/components/index/MoneyManager'
-import GoodManager from '@/components/index/GoodManager'
+import GoodManager from '@/components/index/goodmanager/GoodManager'
 
 export default {
   components: {OrderManager, MoneyManager, GoodManager},
