@@ -63,6 +63,7 @@ export default {
           let user = {'userName': this.userName, 'password': this.password}
           localStorage.setItem('user', JSON.stringify(user))
           localStorage.setItem('AuthToken', response.data.data.authToken)
+          localStorage.setItem('userId', response.data.data.id)
           this.$router.push({path: '/index/index'})
         } else {
           this.$message.error(response.data.errorMessage)
