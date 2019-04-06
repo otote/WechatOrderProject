@@ -7,7 +7,8 @@
       <span>{{'数量： ' + o.total}}</span>
       <span>{{'总价： ' + o.totalPrice}}</span>
       <span>{{'下单时间： ' + o.orderTime}}</span>
-      <span>{{'状态： ' + o.status}}</span>
+      <span>{{'取餐码： ' + o.takeFoodNo}}</span>
+      <span>{{o.status === "PAY" ? "状态： 已支付" : "状态： 未支付"}}</span>
     </div>
     <div>
       <el-table :data="o.orderDetails" border style="width: 100%">
@@ -25,121 +26,34 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
   name: 'OrderManager',
   data () {
     return {
-      order: {},
-      page: {
-        total: 20,
-        pageSize: 5
-      }
+      order: [],
+      page: {}
     }
   },
   methods: {
     changePage (currPage) {
-      console.log(currPage)
+      let that = this
+      that.getOrderByPage(currPage)
+    },
+    getOrderByPage (pageNum) {
+      let that = this
+      let page = {'pageNum': pageNum, 'pageSize': 5}
+      // 获取订单
+      Vue.axios.post('/order/page', page).then((res) => {
+        that.page = res.data.page
+        that.order = res.data.data
+      })
     }
   },
   created () {
-    this.order = JSON.parse('[\n' +
-      '  {\n' +
-      '    "id": 1,\n' +
-      '    "orderNo": 23534354355,\n' +
-      '    "userName": "test",\n' +
-      '    "total": 6,\n' +
-      '    "totalPrice": 113,\n' +
-      '    "orderTime": "2019-02-18 13:59:15",\n' +
-      '    "status": "payed",\n' +
-      '    "orderDetails": [\n' +
-      '      {\n' +
-      '        "orderNo": 23534354355,\n' +
-      '        "goodName": "kfc全家桶",\n' +
-      '        "num": 1,\n' +
-      '        "price": 13,\n' +
-      '        "totalPrice": 13\n' +
-      '      },\n' +
-      '      {\n' +
-      '        "orderNo": 23534354355,\n' +
-      '        "goodName": "麦当劳全家桶",\n' +
-      '        "num": 2,\n' +
-      '        "price": 15,\n' +
-      '        "totalPrice": 30\n' +
-      '      },\n' +
-      '      {\n' +
-      '        "orderNo": 23534354355,\n' +
-      '        "goodName": "金拱门全家桶",\n' +
-      '        "num": 3,\n' +
-      '        "price": 20,\n' +
-      '        "totalPrice": 60\n' +
-      '      }\n' +
-      '    ]\n' +
-      '  },\n' +
-      '  {\n' +
-      '    "id": 2,\n' +
-      '    "orderNo": 6575767365,\n' +
-      '    "userName": "test",\n' +
-      '    "total": 6,\n' +
-      '    "totalPrice": 113,\n' +
-      '    "orderTime": "2019-02-18 13:59:15",\n' +
-      '    "status": "payed",\n' +
-      '    "orderDetails": [\n' +
-      '      {\n' +
-      '        "orderNo": 6575767365,\n' +
-      '        "goodName": "kfc全家桶",\n' +
-      '        "num": 1,\n' +
-      '        "price": 13,\n' +
-      '        "totalPrice": 13\n' +
-      '      },\n' +
-      '      {\n' +
-      '        "orderNo": 6575767365,\n' +
-      '        "goodName": "麦当劳全家桶",\n' +
-      '        "num": 2,\n' +
-      '        "price": 15,\n' +
-      '        "totalPrice": 30\n' +
-      '      },\n' +
-      '      {\n' +
-      '        "orderNo": 6575767365,\n' +
-      '        "goodName": "金拱门全家桶",\n' +
-      '        "num": 3,\n' +
-      '        "price": 20,\n' +
-      '        "totalPrice": 60\n' +
-      '      }\n' +
-      '    ]\n' +
-      '  },\n' +
-      '  {\n' +
-      '    "id": 3,\n' +
-      '    "orderNo": 875857846,\n' +
-      '    "userName": "test",\n' +
-      '    "total": 6,\n' +
-      '    "totalPrice": 113,\n' +
-      '    "orderTime": "2019-02-18 13:59:15",\n' +
-      '    "status": "payed",\n' +
-      '    "orderDetails": [\n' +
-      '      {\n' +
-      '        "orderNo": 875857846,\n' +
-      '        "goodName": "kfc全家桶",\n' +
-      '        "num": 1,\n' +
-      '        "price": 13,\n' +
-      '        "totalPrice": 13\n' +
-      '      },\n' +
-      '      {\n' +
-      '        "orderNo": 875857846,\n' +
-      '        "goodName": "麦当劳全家桶",\n' +
-      '        "num": 2,\n' +
-      '        "price": 15,\n' +
-      '        "totalPrice": 30\n' +
-      '      },\n' +
-      '      {\n' +
-      '        "orderNo": 875857846,\n' +
-      '        "goodName": "金拱门全家桶",\n' +
-      '        "num": 3,\n' +
-      '        "price": 20,\n' +
-      '        "totalPrice": 60\n' +
-      '      }\n' +
-      '    ]\n' +
-      '  }\n' +
-      ']\n')
+    let that = this
+    that.getOrderByPage(1)
   }
 }
 </script>
