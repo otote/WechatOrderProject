@@ -8,7 +8,10 @@
       <span>{{'总价： ' + o.totalPrice}}</span>
       <span>{{'下单时间： ' + o.orderTime}}</span>
       <span>{{'取餐码： ' + o.takeFoodNo}}</span>
-      <span>{{o.status === "PAY" ? "状态： 已支付" : "状态： 未支付"}}</span>
+      <span v-if="o.status==='PAY'">已支付</span>
+      <span v-if="o.status==='NOT_PAY'">未支付</span>
+      <span v-if="o.status==='DEAL'">交易完成</span>
+      <el-button @click="dealOrder(o.id)" v-if="o.status!=='DEAL'" type="primary">确认交易</el-button>
     </div>
     <div>
       <el-table :data="o.orderDetails" border style="width: 100%">
@@ -56,6 +59,21 @@ export default {
         that.orderLoading = false
       }).catch(reason => {
         that.orderLoading = false
+      })
+    },
+    // 确认交易
+    dealOrder (orderId) {
+      Vue.axios.put(`/order/deal/${orderId}`).then((res) => {
+        if (res.data.statusCode === '200') {
+          this.order.forEach((o) => {
+            if (o.id === orderId) {
+              o.status = 'DEAL'
+            }
+          })
+          this.$message.success('交易完成')
+        } else {
+          this.$message.error(res.data.errorMessage)
+        }
       })
     }
   },
