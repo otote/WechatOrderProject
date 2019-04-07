@@ -74,15 +74,16 @@ export default {
         alert('创建失败')
       })
     },
+    // 上传图片
     uploadJpg (file) {
       this.uploadLoading = true
       let data = new FormData()
-      data.append('file', file.file)
+      data.append('smfile', file.file)
       Vue.axios.post(this.UPLOAD_JPG_URL, data).then((res) => {
-        this.goodForm.img = res.data.data
+        this.goodForm.img = res.data.data.url
+        // 取消加载框
         this.uploadLoading = false
-      }).catch(reason => {
-        console.log(reason)
+      }).catch((reason) => {
         this.uploadLoading = false
       })
     },

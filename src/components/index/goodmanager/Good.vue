@@ -75,18 +75,21 @@ export default {
         }
       })
     },
+    // 显示编辑框
     showEditorGoodInfoDialog: function (good) {
       this.editorGoodInfo = good
       this.editorGoodInfoDialogVisible = true
     }
   },
   created () {
+    // 获取所有商品信息
     Vue.axios.get('/good').then((res) => {
       if (res.data.statusCode === '200') {
         this.goods = res.data.data
       }
     })
 
+    // 获取分类信息
     Vue.axios.get('/sort').then((res) => {
       let sorts = res.data.data
       let sortsByKey = []

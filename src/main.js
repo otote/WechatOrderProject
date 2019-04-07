@@ -10,6 +10,14 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+Vue.use(VueAxios, axios)
+Vue.use(ElementUI)
+Vue.prototype.HOST = '/api'
+// 图片上传地址
+Vue.prototype.UPLOAD_JPG_URL = 'https://sm.ms/api/upload'
+// Vue.prototype.UPLOAD_JPG_URL = 'https://wechat.otote.cn/upload/jpg'
+Vue.config.productionTip = false
+
 axios.defaults.baseURL = 'https://wechat.otote.cn'
 // axios.defaults.baseURL = 'http://localhost:9988'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -18,7 +26,10 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.interceptors.request.use(request => {
   let authToken = localStorage.getItem('AuthToken')
   console.log('请求token：' + authToken)
-  request.headers['AuthToken'] = authToken
+  // 如果是上传图片 则不加authToken
+  if (request.url !== Vue.prototype.UPLOAD_JPG_URL) {
+    request.headers['AuthToken'] = authToken
+  }
   return request
 })
 
@@ -36,12 +47,6 @@ axios.interceptors.response.use(response => {
     return response
   }
 })
-
-Vue.use(VueAxios, axios)
-Vue.use(ElementUI)
-Vue.prototype.HOST = '/api'
-Vue.prototype.UPLOAD_JPG_URL = 'https://wechat.otote.cn/upload/jpg'
-Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

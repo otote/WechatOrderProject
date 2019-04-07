@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="orderLoading">
   <el-card shadow="hover" v-for="o in order" :key="o.id" class="order_card">
     <div slot="header" class="order_info">
       <span>{{'订单号： ' + o.orderNo}}</span>
@@ -33,7 +33,9 @@ export default {
   data () {
     return {
       order: [],
-      page: {}
+      page: {},
+      // 显示正在加载
+      orderLoading: false
     }
   },
   methods: {
@@ -43,11 +45,17 @@ export default {
     },
     getOrderByPage (pageNum) {
       let that = this
+      // 显示加载中
+      that.orderLoading = true
       let page = {'pageNum': pageNum, 'pageSize': 5}
       // 获取订单
       Vue.axios.post('/order/page', page).then((res) => {
         that.page = res.data.page
         that.order = res.data.data
+        // 取消显示加载中
+        that.orderLoading = false
+      }).catch(reason => {
+        that.orderLoading = false
       })
     }
   },
