@@ -15,11 +15,10 @@ Vue.use(ElementUI)
 Vue.prototype.HOST = '/api'
 // 图片上传地址
 Vue.prototype.UPLOAD_JPG_URL = 'https://sm.ms/api/upload'
-// Vue.prototype.UPLOAD_JPG_URL = 'https://wechat.otote.cn/upload/jpg'
+Vue.prototype.WEBSOCKET_URL = 'wss://wechat.otote.cn'
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'https://wechat.otote.cn'
-// axios.defaults.baseURL = 'http://localhost:9988'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 // 请求拦截 携带AuthToken

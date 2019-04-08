@@ -75,11 +75,25 @@ export default {
           this.$message.error(res.data.errorMessage)
         }
       })
+    },
+    // 监听新订单
+    listenNewOrder () {
+      let that = this
+      let userId = localStorage.getItem('userId')
+      // 建立webSocket连接  监听是否有新的订单
+      let webSocket = new WebSocket(`${that.WEBSOCKET_URL}/merchant/websocket/${userId}`)
+
+      webSocket.onmessage = function (message) {
+        that.$message.success(message.data)
+        // 刷新订单
+        that.getOrderByPage(1)
+      }
     }
   },
   created () {
     let that = this
     that.getOrderByPage(1)
+    that.listenNewOrder()
   }
 }
 </script>
