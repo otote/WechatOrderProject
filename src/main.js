@@ -16,7 +16,7 @@ Vue.prototype.HOST = '/api'
 // 图片上传地址
 Vue.prototype.UPLOAD_JPG_URL = 'https://sm.ms/api/upload'
 // webSocket地址
-Vue.prototype.WEBSOCKET_URL = 'ws://wechat.otote.cn'
+Vue.prototype.WEBSOCKET_URL = 'ws://wechat.otote.cn:9988'
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'https://wechat.otote.cn'

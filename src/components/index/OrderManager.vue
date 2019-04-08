@@ -11,7 +11,7 @@
       <span v-if="o.status==='PAY'">已支付</span>
       <span v-if="o.status==='NOT_PAY'">未支付</span>
       <span v-if="o.status==='DEAL'">交易完成</span>
-      <el-button class="dealOrder" @click="dealOrder(o.id)" v-if="o.status!=='DEAL'" type="primary">确认交易</el-button>
+      <el-button @click="dealOrder(o.id)" v-if="o.status!=='DEAL'" type="primary">确认交易</el-button>
     </div>
     <div>
       <el-table :data="o.orderDetails" border style="width: 100%">
@@ -110,10 +110,6 @@ export default {
     color: #303133;
     align-items: center;
     text-align: center;
-  }
-  .dealOrder{
-    height: 20px;
-    font-size: 10px;
   }
 
   .order_info span{
