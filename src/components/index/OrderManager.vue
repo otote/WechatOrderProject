@@ -1,7 +1,7 @@
 <template>
   <div v-loading="orderLoading">
   <el-card shadow="hover" v-for="o in order" :key="o.id" class="order_card">
-    <div slot="header" class="order_info">
+    <div slot="header" align="center" class="order_info">
       <span>{{'订单号： ' + o.orderNo}}</span>
       <span>{{'客人名称： ' + o.userName}}</span>
       <span>{{'数量： ' + o.total}}</span>
@@ -11,7 +11,7 @@
       <span v-if="o.status==='PAY'">已支付</span>
       <span v-if="o.status==='NOT_PAY'">未支付</span>
       <span v-if="o.status==='DEAL'">交易完成</span>
-      <el-button @click="dealOrder(o.id)" v-if="o.status!=='DEAL'" type="primary">确认交易</el-button>
+      <el-button class="dealOrder" @click="dealOrder(o.id)" v-if="o.status!=='DEAL'" type="primary">确认交易</el-button>
     </div>
     <div>
       <el-table :data="o.orderDetails" border style="width: 100%">
@@ -108,16 +108,18 @@ export default {
   .order_info{
     display: flex;
     color: #303133;
+    align-items: center;
+    text-align: center;
+  }
+  .dealOrder{
+    height: 20px;
+    font-size: 10px;
   }
 
   .order_info span{
     color:red;
+    margin-right: 50px;
   }
-
-  .order_info span{
-    margin-right: 100px;
-  }
-
   .order_pagination{
     margin-top: 20px;
     float: right;
