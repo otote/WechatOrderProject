@@ -60,7 +60,9 @@ export default {
           series: [{
             data: totalPrice,
             type: 'line',
-            areaStyle: {}
+            areaStyle: {
+              color: '#fff'
+            }
           }]
         }
         thirtyDaysIncomeChart.setOption(option)

@@ -19,8 +19,8 @@ Vue.prototype.UPLOAD_JPG_URL = 'https://sm.ms/api/upload'
 Vue.prototype.WEBSOCKET_URL = 'ws://wechat.otote.cn:9988'
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://wechat.otote.cn'
-// axios.defaults.baseURL = 'http://localhost:9988'
+// axios.defaults.baseURL = 'https://wechat.otote.cn'
+axios.defaults.baseURL = 'http://localhost:9988'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 // 请求拦截 携带AuthToken
