@@ -80,6 +80,7 @@ export default {
     width: 100%;
     height: 100%;
     background: url("../../assets/background.png");
+    /*background-color: #8287ff;*/
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -87,8 +88,9 @@ export default {
 
   .welcome{
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 40px;
     padding-top: 10%;
+    color: #060506;
   }
   .login_form {
     display: flex;

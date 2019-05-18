@@ -8,6 +8,11 @@
       <div class="thirty_days_income" id="thirty_days_income">
       </div>
     </div>
+    <div class="sales_div">
+      <h2>销量排行</h2>
+      <div class="sales" id="sales">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,6 +41,7 @@ export default {
   mounted () {
     let that = this
     that.getThirtyDaysIncome()
+    that.sales()
   },
   methods: {
     // 近三十日收入图表
@@ -71,6 +77,54 @@ export default {
           thirtyDaysIncomeChart.resize()
         })
       })
+    },
+    // 销量排行
+    sales () {
+      Vue.axios.get(`/sales`).then((res) => {
+        let nameData = []
+        let salesData = []
+        _.forEach(res.data.data, function (o) {
+          nameData.push(o.name)
+          salesData.push({value: o.sum, name: o.name})
+        })
+        let salesChart = echarts.init(document.getElementById('sales'))
+        let option = {
+          title: {
+            text: '各商品销量详情',
+            x: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: nameData
+          },
+          series: [
+            {
+              name: '商品销量',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '60%'],
+              data: salesData,
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
+        }
+        salesChart.setOption(option)
+
+        window.addEventListener('resize', function () {
+          salesChart.resize()
+        })
+      })
     }
   }
 }
@@ -91,6 +145,7 @@ export default {
     justify-content: center;
     border: 0px;
     background-color: #62a6ff;
+    margin-left: auto;
   }
 
   .money_card div {
@@ -98,17 +153,34 @@ export default {
     text-align: center;
   }
 
-  h2{
+  h2 {
     text-align: center;
     padding: 30px;
     font-size: 18px;
   }
-  .thirty_days_income_div{
+
+  .thirty_days_income_div {
     width: 600px;
     height: 600px;
     float: right;
+    margin-left: auto;
   }
-  .thirty_days_income{
+
+  .thirty_days_income {
+    width: 500px;
+    height: 500px;
+    border: 1px solid #060506;
+    margin: 0 auto;
+  }
+
+  .sales_div {
+    width: 600px;
+    height: 600px;
+    float: right;
+    margin-right: auto;
+  }
+
+  .sales {
     width: 500px;
     height: 500px;
     border: 1px solid #060506;
