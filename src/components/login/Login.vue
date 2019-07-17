@@ -11,6 +11,9 @@
       <el-form-item>
           <el-button class="login_btn" @click.native="login" type="primary" round :loading="isBtnLoading">登录</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-button class="login_btn" @click.native="signUp" type="primary" round :loading="isBtnLoading">注册</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -65,6 +68,27 @@ export default {
           localStorage.setItem('AuthToken', response.data.data.authToken)
           localStorage.setItem('userId', response.data.data.id)
           this.$router.push({path: '/index/index'})
+        } else {
+          this.$message.error(response.data.errorMessage)
+        }
+      }).catch(reason => {
+        console.log(reason)
+      })
+    },
+    signUp () {
+      if (!this.userName) {
+        this.$message.error('请输入用户名')
+        return
+      }
+      if (!this.password) {
+        this.$message.error('请输入密码')
+        return
+      }
+
+      let data = {'username': this.userName, 'password': this.password}
+      Vue.axios.post('/merchant', data).then(response => {
+        if (response.data.statusCode === '200') {
+          this.$message.success(`注册成功！`)
         } else {
           this.$message.error(response.data.errorMessage)
         }

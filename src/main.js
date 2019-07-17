@@ -16,20 +16,23 @@ Vue.prototype.HOST = '/api'
 // 图片上传地址
 Vue.prototype.UPLOAD_JPG_URL = 'https://sm.ms/api/upload'
 // webSocket地址
-Vue.prototype.WEBSOCKET_URL = 'ws://wechat.otote.cn:9988'
+Vue.prototype.WEBSOCKET_URL = 'ws://127.0.0.1:9988'
+// Vue.prototype.WEBSOCKET_URL = 'ws://wechat.otote.cn:9988'
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'https://wechat.otote.cn'
-// axios.defaults.baseURL = 'http://localhost:9988'
+// axios.defaults.baseURL = 'https://wechat.otote.cn'
+axios.defaults.baseURL = 'http://localhost:9988'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 // 请求拦截 携带AuthToken
 axios.interceptors.request.use(request => {
   let authToken = localStorage.getItem('AuthToken')
+  let merchantId = localStorage.getItem('userId')
   console.log('请求token：' + authToken)
   // 如果是上传图片 则不加authToken
   if (request.url !== Vue.prototype.UPLOAD_JPG_URL) {
     request.headers['AuthToken'] = authToken
+    request.headers['MerchantId'] = merchantId
   }
   return request
 })
@@ -53,6 +56,6 @@ axios.interceptors.response.use(response => {
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
